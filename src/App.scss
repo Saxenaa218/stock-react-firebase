@@ -1,22 +1,72 @@
 @import '~antd/dist/antd.css';
 .vertical-menu {
-    width: 200px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.chart-section {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.list-elem {
+  background-color: #eee;
+  // color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.list-elem-clicked {
+  // background-color: #eee;
+  // color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+.list-elem-clicked:hover {
+  cursor: pointer;
+}
+
+.list-elem:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.list-elem .active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.loader {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  font-size: 30px;
+}
+
+.data-loader {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  font-size: 30px;
+}
+
+.left-subparent {
+  width: 30%;
+  max-width: 200px;
+  h2 {
+    padding-left: 12px;
+    font-weight: bold;
   }
-  
-  .list-elem {
-    background-color: #eee;
-    color: black;
-    display: block;
-    padding: 12px;
-    text-decoration: none;
+}
+
+.right-subparent {
+  width: 90%;
+  h2 {
+    text-align: center;
+    font-weight: bold;
   }
-  
-  .list-elem:hover {
-    background-color: #ccc;
-    cursor: pointer;
-  }
-  
-  .list-elem .active {
-    background-color: #4CAF50;
-    color: white;
-  }
+}

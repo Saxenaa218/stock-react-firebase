@@ -4,6 +4,7 @@ import './App.scss';
 import {Icon} from 'antd';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import moment from 'moment'
 
 class App extends React.Component {
 
@@ -14,7 +15,7 @@ class App extends React.Component {
       datasets: null,
       loading: false,
       selected: null,
-        dsloading: false,
+      dsloading: false,
     }
     // Object.defineProperty(Array.prototype, 'chunk', {
     //     value: function(chunkSize){
@@ -50,8 +51,8 @@ class App extends React.Component {
       name: keyword
     }
     Axios.post(url, data)
-      .then(json => this.setState({alldata: json.data.date}))
-      .catch(error => console.log(error));
+      .then(json => this.setState({alldata: json.data.date, loading: false}))
+      .catch(error => {console.log(error);this.setState({loading: false})});
   }
 
   chunkify = (chunkSize) => {
@@ -65,6 +66,7 @@ class App extends React.Component {
   }
 
   getOptions = (mainData) => {
+    console.log(mainData)
     return {
       chart: {
           zoomType: 'x'
@@ -73,18 +75,22 @@ class App extends React.Component {
           text: `Trend (${this.state.selected})`
       },
       subtitle: {
-          text: `from ${mainData[0][0]} at ${mainData[0][1]} to ${mainData[mainData.length-1][0]} at ${mainData[mainData.length-1][1]}`
+          text: `from <b>${moment(mainData[0][0]).format("DD-MM-YYYY")}</b> at <b>${mainData[0][1]}</b> to <b>${moment(mainData[mainData.length-1][0]).format("DD-MM-YYYY")}</b> at <b>${mainData[mainData.length-1][1]}</b>`
       },
       xAxis: {
-          type: 'string',
-          title: {
-            text: 'Date'
-          }
+        type: 'Date',
+        // title: {
+        //   text: 'Date'
+        // },
+        categories: mainData.map(e => e[0]),
+        // labels: {
+        //     rotation: 90
+        // }
       },
       yAxis: {
         type: 'Number',
         title: {
-          text: 'Closa Value'
+          text: 'Closing Value(in Rs)'
         }
       },
       legend: {
@@ -120,7 +126,17 @@ class App extends React.Component {
       series: [{
           type: 'area',
           data: mainData
-      }]
+      }],
+      credits: {
+        enabled: false
+      },
+      tooltip: {
+        formatter: function () {
+          let t = this.points[0]
+          return "<div>Date: " +"<b>"+moment(t.key).format("DD-MM-YYYY")+"</div><br/>"+"<div>Closing price: <b>"+t.y+"</b> Rs</div>";
+        },
+        shared: true
+    },
     };
   }
 
@@ -128,19 +144,25 @@ class App extends React.Component {
 
   render() {
     
-    let { datasets, dsloading } = this.state;
+    let { datasets, dsloading, selected, loading } = this.state;
 
     return (
       <div style={{
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        height: '90%'
       }}>
-        <div class="vertical-menu">
-          {datasets && datasets.map(e => <div className="list-elem" onClick={() => this.getData(e.split('.')[0])}>{e.split('.')[0]}</div>)}
+        <div className="left-subparent">
+          <h2>Company List</h2>
+          {dsloading ? <Icon type="loading" className="loader"/> : <div className="vertical-menu">
+              {datasets && datasets.map(e => <div key={e} className={selected === e.split('.')[0] ? "list-elem-clicked" : "list-elem"} onClick={() => this.getData(e.split('.')[0])}>{e.split('.')[0]}</div>)}
+          </div>}
         </div>
-        <div>
-            {
-                dsloading ? <Icon type="loading"/> : <>{this.chunkify(999).map(e => <HighchartsReact highcharts={Highcharts} options={this.getOptions(e)} />)}</>}
+        <div className="right-subparent">
+          <h2>Analysis Chart</h2>
+          <div className="chart-section">
+              {loading ? <Icon type="loading" className="data-loader"/> : <>{this.chunkify(999).map(e => <HighchartsReact highcharts={Highcharts} options={this.getOptions(e)} />)}</>}
+          </div>
         </div>
       </div>      
     );
