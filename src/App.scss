@@ -1,0 +1,22 @@
+@import '~antd/dist/antd.css';
+.vertical-menu {
+    width: 200px;
+  }
+  
+  .list-elem {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+  }
+  
+  .list-elem:hover {
+    background-color: #ccc;
+    cursor: pointer;
+  }
+  
+  .list-elem .active {
+    background-color: #4CAF50;
+    color: white;
+  }

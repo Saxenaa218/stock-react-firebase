@@ -1,0 +1,51 @@
+{
+  "name": "react-firebase",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "antd": "^3.26.18",
+    "axios": "^0.19.2",
+    "dialogflow": "^0.10.3",
+    "firebase": "^7.14.2",
+    "firebase-admin": "^8.3.0",
+    "firebase-functions": "3.2.0",
+    "firebase-tools": "^8.2.0",
+    "grpc": "^1.20.2",
+    "highcharts": "^8.0.4",
+    "highcharts-react-official": "^3.0.0",
+    "material-components-web": "^6.0.0",
+    "moment": "^2.27.0",
+    "node": "8.13.0",
+    "node-sass": "^4.14.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": "8"
+  }
+}
